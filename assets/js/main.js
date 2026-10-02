@@ -10,7 +10,7 @@ const WHATSAPP_NUMBER = '221779329678';
 
 // URL de l'application Web Google Apps Script qui enregistre les commandes
 // dans le Google Sheet (voir apps-script/INSTRUCTIONS.md).
-const ORDER_ENDPOINT = 'COLLER_ICI_L_URL_APPS_SCRIPT';
+const ORDER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzw3r2D1VpUCeDmGd9eekVggUbKhcpSIupj65jcLvn7-IqPSDbeA7Wl1t60x-iTdzh5XQ/exec';
 
 const PRODUCTS = [
   { id: 'iphone', name: 'iPhone', desc: 'Les derniers modèles Apple, neufs et garantis.', price: null, img: 'p-iphone.jpg', cat: 'smartphones' },
