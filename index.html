@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sakho Électronic – Boutique d'électronique à Dakar</title>
+  <meta name="description" content="Sakho Électronic : smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques à Médina, Dakar. Commandez facilement sur WhatsApp.">
+  <meta name="theme-color" content="#f26a0f">
+  <link rel="icon" href="assets/img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Barre d'infos -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span class="topbar__item">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg>
+        Médina, Rue 29 x Blaise Diagne, Dakar
+      </span>
+      <span class="topbar__phones">
+        <a class="topbar__item" href="tel:+221779329678"><svg class="ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg>+221 77 932 96 78</a>
+        <a class="topbar__item" href="tel:+221787598968"><svg class="ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg>+221 78 759 89 68</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#accueil" class="header__logo" aria-label="Sakho Électronic – Accueil">
+        <img src="assets/img/logo.jpg" alt="Logo Sakho Électronic" width="893" height="1079">
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navigation principale">
+        <a href="#accueil" class="nav__link is-active">Accueil</a>
+        <a href="#produits" class="nav__link">Nos produits</a>
+        <a href="#a-propos" class="nav__link">À propos</a>
+        <a href="#services" class="nav__link">Services</a>
+        <a href="#contact" class="nav__link">Contact</a>
+        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="btn btn--primary nav__cta">
+          <svg class="ico" viewBox="0 0 24 24"><use href="#i-wa"/></svg> Nous contacter
+        </a>
+      </nav>
+
+      <div class="header__actions">
+        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="header__wa" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+        </a>
+        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="btn btn--primary header__cta">Nous contacter</a>
+        <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="accueil">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow">Sakho Électronic · Dakar</p>
+          <h1>Votre boutique <span class="accent">d’électronique</span> de confiance</h1>
+          <p class="hero__sub">Smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques.</p>
+          <div class="hero__btns">
+            <a href="#produits" class="btn btn--primary btn--lg">
+              Voir nos produits
+              <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20j'aimerais%20avoir%20des%20informations." target="_blank" rel="noopener" class="btn btn--dark btn--lg">
+              <svg class="ico" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+              Nous contacter sur WhatsApp
+            </a>
+          </div>
+          <ul class="hero__badges">
+            <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Grandes marques</li>
+            <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Livraison au Sénégal</li>
+            <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Conseil personnalisé</li>
+          </ul>
+        </div>
+        <div class="hero__visual">
+          <div class="hero__blob" aria-hidden="true"></div>
+          <img src="assets/img/hero.jpg" alt="Smartphones, ordinateur portable, montre connectée, écouteurs et chargeur" width="650" height="330">
+        </div>
+      </div>
+    </section>
+
+    <!-- Catégories -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Découvrez nos produits</h2>
+          <p class="section__lead">Tout l’univers high-tech réuni dans une seule boutique.</p>
+        </div>
+        <div class="categories">
+          <a href="#produits" class="cat" data-filter="smartphones">
+            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-phone-dev"/></svg></span>
+            <img src="assets/img/cat-smartphones.jpg" alt="" loading="lazy">
+            <span class="cat__name">Smartphones</span>
+          </a>
+          <a href="#produits" class="cat" data-filter="ordinateurs">
+            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-laptop"/></svg></span>
+            <img src="assets/img/cat-ordinateurs.jpg" alt="" loading="lazy">
+            <span class="cat__name">Ordinateurs</span>
+          </a>
+          <a href="#produits" class="cat" data-filter="accessoires">
+            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-plug"/></svg></span>
+            <img src="assets/img/cat-accessoires.jpg" alt="" loading="lazy">
+            <span class="cat__name">Accessoires</span>
+          </a>
+          <a href="#produits" class="cat" data-filter="audio">
+            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-headphones"/></svg></span>
+            <img src="assets/img/cat-audio.jpg" alt="" loading="lazy">
+            <span class="cat__name">Audio</span>
+          </a>
+          <a href="#produits" class="cat" data-filter="montres">
+            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-watch"/></svg></span>
+            <img src="assets/img/cat-montres.jpg" alt="" loading="lazy">
+            <span class="cat__name">Montres connectées</span>
+          </a>
+          <a href="#produits" class="cat" data-filter="chargeurs">
+            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
+            <img src="assets/img/cat-cables.jpg" alt="" loading="lazy">
+            <span class="cat__name">Chargeurs &amp; câbles</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Produits -->
+    <section class="section section--alt" id="produits">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Nos produits</h2>
+          <p class="section__lead">Une sélection de nos articles. Cliquez sur « Commander » pour nous écrire directement sur WhatsApp.</p>
+        </div>
+        <div class="filters" role="tablist" aria-label="Filtrer par catégorie">
+          <button class="chip is-active" data-filter="all">Tous</button>
+          <button class="chip" data-filter="smartphones">Smartphones</button>
+          <button class="chip" data-filter="ordinateurs">Ordinateurs</button>
+          <button class="chip" data-filter="accessoires">Accessoires</button>
+          <button class="chip" data-filter="audio">Audio</button>
+          <button class="chip" data-filter="montres">Montres</button>
+          <button class="chip" data-filter="chargeurs">Chargeurs &amp; câbles</button>
+        </div>
+        <div class="products" id="products"><!-- rempli par assets/js/main.js --></div>
+        <p class="products__note">Vous ne trouvez pas votre produit ? <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20je%20cherche%20un%20produit%20%3A%20" target="_blank" rel="noopener">Demandez-nous sur WhatsApp</a>, nous avons bien plus en boutique.</p>
+      </div>
+    </section>
+
+    <!-- Marques -->
+    <section class="brands" aria-label="Nos marques">
+      <div class="container brands__inner">
+        <span class="brands__title">Nos marques</span>
+        <ul class="brands__list">
+          <li>Apple</li><li>Samsung</li><li>Xiaomi</li><li>Infinix</li><li>Tecno</li><li>HP</li><li>Lenovo</li><li>JBL</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- À propos -->
+    <section class="section" id="a-propos">
+      <div class="container about">
+        <div class="about__logo">
+          <img src="assets/img/logo.jpg" alt="Logo Sakho Électronic" loading="lazy" width="893" height="1079">
+        </div>
+        <div class="about__text">
+          <p class="eyebrow">Qui sommes-nous ?</p>
+          <h2 class="section__title section__title--left">À propos de Sakho Électronic</h2>
+          <p>Sakho Électronic est une boutique spécialisée dans la vente de smartphones, ordinateurs, accessoires et équipements électroniques. Nous proposons des produits de différentes grandes marques avec un service client à l'écoute.</p>
+          <blockquote class="about__quote">« Votre satisfaction, notre priorité. »</blockquote>
+          <div class="about__stats">
+            <div><strong>Grandes</strong><span>marques</span></div>
+            <div><strong>Dakar</strong><span>Médina</span></div>
+            <div><strong>WhatsApp</strong><span>réponse rapide</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Nos services</h2>
+          <p class="section__lead">Ce qui fait la différence chez Sakho Électronic.</p>
+        </div>
+        <div class="services">
+          <article class="service">
+            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-truck"/></svg></span>
+            <h3>Livraison</h3>
+            <p>Livraison disponible à Dakar et partout au Sénégal.</p>
+          </article>
+          <article class="service">
+            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-card"/></svg></span>
+            <h3>Paiement</h3>
+            <p>Plusieurs moyens de paiement disponibles.</p>
+          </article>
+          <article class="service">
+            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></span>
+            <h3>Conseil</h3>
+            <p>Nous vous aidons à choisir le produit adapté à vos besoins.</p>
+          </article>
+          <article class="service">
+            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
+            <h3>Qualité</h3>
+            <p>Des produits soigneusement sélectionnés.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact">
+          <div class="contact__info">
+            <h2 class="section__title section__title--left">Contactez-nous</h2>
+            <p class="section__lead">Une question, une commande ? Écrivez-nous ou passez nous voir en boutique.</p>
+
+            <div class="contact__row">
+              <span class="contact__icon contact__icon--wa"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></span>
+              <div>
+                <h3>WhatsApp</h3>
+                <a href="https://wa.me/221779329678" target="_blank" rel="noopener">+221 77 932 96 78</a><br>
+                <a href="https://wa.me/221787598968" target="_blank" rel="noopener">+221 78 759 89 68</a>
+              </div>
+            </div>
+
+            <div class="contact__row">
+              <span class="contact__icon"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
+              <div>
+                <h3>Adresse</h3>
+                <p>📍 Médina, Rue 29 x Blaise Diagne, Dakar</p>
+              </div>
+            </div>
+
+            <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20j'aimerais%20avoir%20des%20informations." target="_blank" rel="noopener" class="btn btn--primary btn--xl">
+              <svg class="ico" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+              Contacter sur WhatsApp
+            </a>
+            <!-- Réseaux sociaux : ajoutez vos liens ici quand ils sont disponibles, ex.
+            <div class="socials">
+              <a href="https://www.facebook.com/..." aria-label="Facebook">…</a>
+            </div> -->
+          </div>
+          <div class="contact__map">
+            <iframe title="Plan d'accès Sakho Électronic" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Rue+29+x+Avenue+Blaise+Diagne,+M%C3%A9dina,+Dakar&output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="assets/img/logo.jpg" alt="Logo Sakho Électronic" loading="lazy" width="893" height="1079">
+        <p class="footer__slogan">Votre satisfaction, notre priorité.</p>
+      </div>
+      <div>
+        <h4>Liens</h4>
+        <ul class="footer__links">
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#produits">Nos produits</a></li>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="footer__links">
+          <li><a href="https://wa.me/221779329678" target="_blank" rel="noopener">+221 77 932 96 78</a></li>
+          <li><a href="https://wa.me/221787598968" target="_blank" rel="noopener">+221 78 759 89 68</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Adresse</h4>
+        <p>Médina, Rue 29 x Blaise Diagne, Dakar</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© <span id="year">2026</span> Sakho Électronic. Tous droits réservés.</div>
+    </div>
+  </footer>
+
+  <!-- Bouton WhatsApp flottant -->
+  <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="wa-float" aria-label="Discuter sur WhatsApp">
+    <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+  </a>
+
+  <!-- Icônes SVG -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.8h-.01a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.72.97 1-3.62-.24-.37a9.78 9.78 0 0 1-1.5-5.22c0-5.41 4.41-9.82 9.84-9.82 2.63 0 5.1 1.03 6.95 2.88a9.75 9.75 0 0 1 2.88 6.95c0 5.42-4.41 9.82-9.84 9.82m8.37-18.2A11.76 11.76 0 0 0 12.04.13C5.5.13.2 5.43.2 11.97c0 2.09.55 4.13 1.59 5.93L.1 24l6.27-1.64a11.8 11.8 0 0 0 5.66 1.44h.01c6.53 0 11.84-5.3 11.84-11.84 0-3.16-1.23-6.13-3.47-8.37"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7m0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-phone-dev" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6.5" y="2" width="11" height="20" rx="2.5"/><path d="M10.5 18.5h3"/></g></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4.5" width="16" height="11" rx="1.5"/><path d="M2 19.5h20l-1.5-4h-17z"/></g></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0zM12 17v5"/></g></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><rect x="3" y="14" width="5" height="7" rx="1.5"/><rect x="16" y="14" width="5" height="7" rx="1.5"/></g></symbol>
+    <symbol id="i-watch" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9 6l1-4h4l1 4M9 18l1 4h4l1-4M12 9.5V12l1.5 1.5"/></g></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 6h11v10H2zM13 9h4.5l3.5 4v3h-8z"/><circle cx="6" cy="17.5" r="2" fill="#fff"/><circle cx="17" cy="17.5" r="2" fill="#fff"/></g></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></g></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10v-6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></g></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></g></symbol>
+  </svg>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
