@@ -50,6 +50,10 @@
         <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="header__wa" aria-label="WhatsApp">
           <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
         </a>
+        <button class="cart-btn" id="cartOpen" aria-label="Ouvrir le panier" aria-controls="cart" aria-expanded="false">
+          <svg viewBox="0 0 24 24"><use href="#i-cart"/></svg>
+          <span class="cart-btn__count" id="cartCount" hidden>0</span>
+        </button>
         <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="btn btn--primary header__cta">Nous contacter</a>
         <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
           <span></span><span></span><span></span>
@@ -136,7 +140,7 @@
       <div class="container">
         <div class="section__head">
           <h2 class="section__title">Nos produits</h2>
-          <p class="section__lead">Une sélection de nos articles. Cliquez sur « Commander » pour nous écrire directement sur WhatsApp.</p>
+          <p class="section__lead">Une sélection de nos articles. Ajoutez vos articles au panier et passez commande directement sur le site.</p>
         </div>
         <div class="filters" role="tablist" aria-label="Filtrer par catégorie">
           <button class="chip is-active" data-filter="all">Tous</button>
@@ -291,6 +295,89 @@
     </div>
   </footer>
 
+  <!-- Panier -->
+  <div class="cart-overlay" id="cartOverlay" hidden></div>
+  <aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" tabindex="-1">
+    <div class="cart__head">
+      <button class="cart__back" id="cartBack" aria-label="Retour au panier" hidden>
+        <svg viewBox="0 0 24 24"><use href="#i-back"/></svg>
+      </button>
+      <h2 id="cartTitle">Mon panier</h2>
+      <button class="cart__close" id="cartClose" aria-label="Fermer le panier">
+        <svg viewBox="0 0 24 24"><use href="#i-close"/></svg>
+      </button>
+    </div>
+
+    <!-- Étape 1 : contenu du panier -->
+    <div class="cart__view" data-view="items">
+      <div class="cart__empty" id="cartEmpty">
+        <svg viewBox="0 0 24 24"><use href="#i-cart"/></svg>
+        <p>Votre panier est vide.</p>
+        <a href="#produits" class="btn btn--primary" data-close-cart>Voir nos produits</a>
+      </div>
+      <ul class="cart__list" id="cartList"></ul>
+      <div class="cart__foot" id="cartFoot">
+        <div class="cart__total"><span>Total</span><strong id="cartTotal">—</strong></div>
+        <p class="cart__notice" id="cartNotice" hidden>Le prix final de certains articles vous sera confirmé par la boutique.</p>
+        <button class="btn btn--primary btn--block btn--lg" id="toCheckout">Valider ma commande</button>
+        <button class="cart__clear" id="cartClear">Vider le panier</button>
+      </div>
+    </div>
+
+    <!-- Étape 2 : formulaire de commande -->
+    <div class="cart__view" data-view="checkout" hidden>
+      <form class="order-form" id="orderForm" novalidate>
+        <p class="order-form__intro">Renseignez vos coordonnées : Sakho Électronic vous appellera pour confirmer la commande et la livraison.</p>
+        <div class="field">
+          <label for="f-name">Nom complet *</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+          <p class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="f-phone">Téléphone *</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="77 123 45 67" maxlength="20" required>
+          <p class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="f-address">Adresse / quartier de livraison *</label>
+          <input id="f-address" name="address" type="text" autocomplete="street-address" maxlength="150" required>
+          <p class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="f-city">Ville</label>
+          <input id="f-city" name="city" type="text" autocomplete="address-level2" value="Dakar" maxlength="60">
+          <p class="field__error"></p>
+        </div>
+        <fieldset class="field">
+          <legend>Mode de paiement souhaité *</legend>
+          <div class="pay-options">
+            <label class="pay-option"><input type="radio" name="payment" value="Wave" required><span>Wave</span></label>
+            <label class="pay-option"><input type="radio" name="payment" value="Orange Money"><span>Orange Money</span></label>
+            <label class="pay-option"><input type="radio" name="payment" value="Espèces à la livraison"><span>Espèces à la livraison</span></label>
+          </div>
+          <p class="field__error"></p>
+        </fieldset>
+        <div class="field">
+          <label for="f-note">Note / commentaire</label>
+          <textarea id="f-note" name="note" rows="3" maxlength="500" placeholder="Couleur, capacité, horaire de livraison…"></textarea>
+        </div>
+        <div class="order-form__summary" id="orderSummary"></div>
+        <p class="order-form__error" id="orderError" hidden></p>
+        <button type="submit" class="btn btn--primary btn--block btn--lg" id="orderSubmit">Envoyer ma commande</button>
+        <p class="order-form__legal">Aucun paiement en ligne : vous payez à la livraison ou par Wave / Orange Money après confirmation.</p>
+      </form>
+    </div>
+
+    <!-- Étape 3 : confirmation -->
+    <div class="cart__view cart__done" data-view="done" hidden>
+      <span class="cart__done-icon"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+      <h3>Merci !</h3>
+      <p>Votre commande <strong id="doneId"></strong> a bien été enregistrée.</p>
+      <p>Sakho Électronic vous appellera pour confirmer la livraison.</p>
+      <button class="btn btn--primary" data-close-cart>Continuer mes achats</button>
+    </div>
+  </aside>
+
   <!-- Bouton WhatsApp flottant -->
   <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="wa-float" aria-label="Discuter sur WhatsApp">
     <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
@@ -313,6 +400,9 @@
     <symbol id="i-card" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></g></symbol>
     <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></g></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10v-6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></g></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5"/></g></symbol>
     <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></g></symbol>
   </svg>
 
