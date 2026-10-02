@@ -2,6 +2,8 @@
 
 Durée : environ 5 minutes. À faire une seule fois.
 
+> Si « Extensions → Apps Script » ne s'ouvre pas, utilisez la **méthode B** en bas de page.
+
 ## 1. Créer le tableau
 1. Allez sur https://sheets.google.com avec le compte Google de la boutique.
 2. Créez une feuille vierge et nommez-la par exemple **Commandes Sakho Électronic**.
@@ -45,3 +47,12 @@ Durée : environ 5 minutes. À faire une seule fois.
 ## Si vous modifiez le script plus tard
 Faites **Déployer → Gérer les déploiements → modifier (crayon) → Version : Nouvelle version → Déployer**.
 L'URL reste la même.
+
+## Méthode B : sans passer par le tableau
+1. Ouvrez une fenêtre de navigation privée et connectez-vous avec **un seul** compte Google.
+2. Allez sur https://script.google.com puis cliquez sur **Nouveau projet**.
+3. Effacez le code affiché et collez le contenu de `apps-script/Code.gs`, puis **Enregistrer**.
+4. Dans la liste en haut (à côté de « Déboguer »), choisissez la fonction **setup**, puis cliquez sur **Exécuter**.
+   Autorisez l'accès (voir l'étape 3.4 ci-dessus). Le journal affiche le lien du tableau
+   « Commandes Sakho Électronic », créé dans votre Google Drive.
+5. Faites ensuite l'étape 3 (Déployer → Application Web) et l'étape 4.

@@ -1,7 +1,11 @@
 /**
  * SAKHO ÉLECTRONIC – réception des commandes du site
- * À coller dans Extensions > Apps Script du Google Sheet des commandes,
- * puis à déployer en « Application Web » (voir INSTRUCTIONS.md).
+ * Deux façons de l'installer (voir INSTRUCTIONS.md) :
+ *  - dans un Google Sheet via Extensions > Apps Script ;
+ *  - ou directement sur https://script.google.com (Nouveau projet) :
+ *    lancez alors la fonction « setup » une fois, elle crée le tableau
+ *    « Commandes Sakho Électronic » dans votre Google Drive.
+ * Puis déployez en « Application Web ».
  */
 
 const SHEET_NAME = 'Commandes';
@@ -62,8 +66,26 @@ function clean_(value, max) {
   return s;
 }
 
+// À lancer une fois (bouton « Exécuter ») si le script a été créé sur script.google.com.
+function setup() {
+  const ss = getSpreadsheet_();
+  getSheet_();
+  Logger.log('Tableau des commandes : ' + ss.getUrl());
+}
+
+function getSpreadsheet_() {
+  const active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) return active;
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('SHEET_ID');
+  if (id) return SpreadsheetApp.openById(id);
+  const ss = SpreadsheetApp.create('Commandes Sakho Électronic');
+  props.setProperty('SHEET_ID', ss.getId());
+  return ss;
+}
+
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet_();
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
   if (sheet.getLastRow() === 0) {
