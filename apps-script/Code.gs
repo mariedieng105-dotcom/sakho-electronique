@@ -113,6 +113,8 @@ function unesc_(s) {
 
 // Envoie un e-mail de test (bouton « Exécuter ») pour vérifier la réception.
 function testEmail() {
+  // Affiche l'écran d'autorisation si une permission manque (ex. envoi d'e-mails).
+  ScriptApp.requireAllScopes(ScriptApp.AuthMode.FULL);
   notify_({
     orderId: 'SAK-00000000-0000', name: 'Client test', phone: '+221770000000',
     address: 'Médina', city: 'Dakar', payment: 'Wave', total: 'Prix sur demande',
@@ -145,6 +147,7 @@ function clean_(value, max) {
 
 // À lancer une fois (bouton « Exécuter ») si le script a été créé sur script.google.com.
 function setup() {
+  ScriptApp.requireAllScopes(ScriptApp.AuthMode.FULL);
   const ss = getSpreadsheet_();
   getSheet_();
   Logger.log('Tableau des commandes : ' + ss.getUrl());
