@@ -37,11 +37,18 @@ Durée : environ 5 minutes. À faire une seule fois.
 - Ouvrez l'URL `/exec` dans le navigateur : vous devez voir `"ok":true`.
 - Passez une commande test sur le site : une ligne apparaît dans l'onglet **Commandes**.
 
+## Recevoir chaque commande par e-mail
+Le script envoie automatiquement un e-mail à chaque nouvelle commande
+(client, téléphone, adresse, produits, paiement + bouton « Voir toutes les commandes »).
+- Par défaut, l'e-mail part vers l'adresse du compte Google qui a installé le script.
+- Pour l'envoyer ailleurs (ex. l'e-mail du vendeur), modifiez en haut du script :
+  `const NOTIFY_EMAIL = 'vendeur@gmail.com';` (plusieurs adresses : séparées par des virgules).
+- Pour tester : choisissez la fonction **testEmail** puis **Exécuter**.
+- Limite de Google : environ 100 e-mails par jour avec un compte Gmail gratuit.
+
 ## Utilisation au quotidien
 - Chaque commande = une ligne, avec le statut **Nouvelle**.
 - Changez le statut dans la liste déroulante : Confirmée, Livrée, Annulée.
-- Pour être prévenu : dans Google Sheets, **Outils → Règles de notification → Une modification est apportée**
-  pour recevoir un e-mail à chaque nouvelle commande.
 - L'application Google Sheets sur téléphone permet de suivre les commandes partout.
 
 ## Si vous modifiez le script plus tard
