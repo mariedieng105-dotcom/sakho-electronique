@@ -2,6 +2,11 @@
 
 Durée : environ 5 minutes. À faire une seule fois.
 
+> **Important – éviter les erreurs « Impossible d'ouvrir le fichier » (Google Drive)** :
+> faites toute l'installation dans une **fenêtre de navigation privée** où **un seul**
+> compte Google est connecté (celui de la boutique). Sur l'écran d'autorisation de Google,
+> cochez toujours **« Tout sélectionner »** (sinon l'envoi d'e-mails ne marchera pas).
+
 > Si « Extensions → Apps Script » ne s'ouvre pas, utilisez la **méthode B** en bas de page.
 
 ## 1. Créer le tableau
@@ -63,3 +68,10 @@ L'URL reste la même.
    Autorisez l'accès (voir l'étape 3.4 ci-dessus). Le journal affiche le lien du tableau
    « Commandes Sakho Électronic », créé dans votre Google Drive.
 5. Faites ensuite l'étape 3 (Déployer → Application Web) et l'étape 4.
+
+## Dépannage : « You do not have permission to call MailApp.sendEmail »
+L'autorisation d'envoyer des e-mails n'a pas été cochée. Dans une fenêtre privée (un seul compte) :
+1. https://myaccount.google.com/connections → le projet → **Supprimer tous les liens**.
+2. Dans Apps Script : fonction **testEmail** → **Exécuter** → **Tout sélectionner** → **Continuer**.
+3. **Déployer → Gérer les déploiements → ✏️ → Nouvelle version → Déployer**.
+Ne cliquez pas sur le lien « Cliquez ici pour accorder des autorisations » du journal.
