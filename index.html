@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sakho Électronic – Boutique d'électronique à Dakar</title>
-  <meta name="description" content="Sakho Électronic : smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques à Médina, Dakar. Commandez facilement sur WhatsApp.">
-  <meta name="theme-color" content="#f26a0f">
+  <meta name="description" content="Sakho Électronic : smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques à Médina, Dakar. Commandez directement sur le site.">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" href="assets/img/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -22,8 +22,8 @@
         Médina, Rue 29 x Blaise Diagne, Dakar
       </span>
       <span class="topbar__phones">
-        <a class="topbar__item" href="tel:+221779329678"><svg class="ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg>+221 77 932 96 78</a>
-        <a class="topbar__item" href="tel:+221787598968"><svg class="ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg>+221 78 759 89 68</a>
+        <a class="topbar__item" href="tel:+221779329678">+221 77 932 96 78</a>
+        <a class="topbar__item" href="tel:+221787598968">+221 78 759 89 68</a>
       </span>
     </div>
   </div>
@@ -47,16 +47,16 @@
       </nav>
 
       <div class="header__actions">
-        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="header__wa" aria-label="WhatsApp">
+        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
           <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
         </a>
-        <button class="cart-btn" id="cartOpen" aria-label="Ouvrir le panier" aria-controls="cart" aria-expanded="false">
+        <button class="icon-btn cart-btn" id="cartOpen" aria-label="Ouvrir le panier" aria-controls="cart" aria-expanded="false">
           <svg viewBox="0 0 24 24"><use href="#i-cart"/></svg>
           <span class="cart-btn__count" id="cartCount" hidden>0</span>
         </button>
-        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="btn btn--primary header__cta">Nous contacter</a>
+        <a href="https://wa.me/221779329678" target="_blank" rel="noopener" class="btn btn--primary btn--sm header__cta">Nous contacter</a>
         <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
-          <span></span><span></span><span></span>
+          <span></span><span></span>
         </button>
       </div>
     </div>
@@ -66,81 +66,69 @@
     <!-- Hero -->
     <section class="hero" id="accueil">
       <div class="container hero__inner">
-        <div class="hero__text">
-          <p class="eyebrow">Sakho Électronic · Dakar</p>
-          <h1>Votre boutique <span class="accent">d’électronique</span> de confiance</h1>
-          <p class="hero__sub">Smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques.</p>
-          <div class="hero__btns">
-            <a href="#produits" class="btn btn--primary btn--lg">
-              Voir nos produits
-              <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
-            </a>
-            <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20j'aimerais%20avoir%20des%20informations." target="_blank" rel="noopener" class="btn btn--dark btn--lg">
-              <svg class="ico" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
-              Nous contacter sur WhatsApp
-            </a>
-          </div>
-          <ul class="hero__badges">
-            <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Grandes marques</li>
-            <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Livraison au Sénégal</li>
-            <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Conseil personnalisé</li>
-          </ul>
+        <p class="hero__kicker">Sakho Électronic</p>
+        <h1 class="hero__title">Votre boutique d’électronique de confiance.</h1>
+        <p class="hero__sub">Smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques.</p>
+        <div class="hero__btns">
+          <a href="#produits" class="btn btn--primary btn--lg">Voir nos produits</a>
+          <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20j'aimerais%20avoir%20des%20informations." target="_blank" rel="noopener" class="btn btn--ghost btn--lg">
+            <svg class="ico" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+            Nous contacter sur WhatsApp
+          </a>
         </div>
-        <div class="hero__visual">
-          <div class="hero__blob" aria-hidden="true"></div>
+        <figure class="hero__stage">
           <img src="assets/img/hero.jpg" alt="Smartphones, ordinateur portable, montre connectée, écouteurs et chargeur" width="650" height="330">
-        </div>
+        </figure>
+        <ul class="hero__badges">
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Grandes marques</li>
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Livraison au Sénégal</li>
+          <li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Conseil personnalisé</li>
+        </ul>
       </div>
     </section>
 
     <!-- Catégories -->
-    <section class="section" id="categories">
+    <section class="section section--carbon" id="categories">
       <div class="container">
         <div class="section__head">
-          <h2 class="section__title">Découvrez nos produits</h2>
+          <h2 class="section__title">Découvrez nos produits.</h2>
           <p class="section__lead">Tout l’univers high-tech réuni dans une seule boutique.</p>
         </div>
         <div class="categories">
           <a href="#produits" class="cat" data-filter="smartphones">
-            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-phone-dev"/></svg></span>
-            <img src="assets/img/cat-smartphones.jpg" alt="" loading="lazy">
-            <span class="cat__name">Smartphones</span>
+            <span class="cat__media"><img src="assets/img/cat-smartphones.jpg" alt="" loading="lazy"></span>
+            <span class="cat__name"><svg class="ico" viewBox="0 0 24 24"><use href="#i-phone-dev"/></svg>Smartphones</span>
           </a>
           <a href="#produits" class="cat" data-filter="ordinateurs">
-            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-laptop"/></svg></span>
-            <img src="assets/img/cat-ordinateurs.jpg" alt="" loading="lazy">
-            <span class="cat__name">Ordinateurs</span>
+            <span class="cat__media"><img src="assets/img/cat-ordinateurs.jpg" alt="" loading="lazy"></span>
+            <span class="cat__name"><svg class="ico" viewBox="0 0 24 24"><use href="#i-laptop"/></svg>Ordinateurs</span>
           </a>
           <a href="#produits" class="cat" data-filter="accessoires">
-            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-plug"/></svg></span>
-            <img src="assets/img/cat-accessoires.jpg" alt="" loading="lazy">
-            <span class="cat__name">Accessoires</span>
+            <span class="cat__media"><img src="assets/img/cat-accessoires.jpg" alt="" loading="lazy"></span>
+            <span class="cat__name"><svg class="ico" viewBox="0 0 24 24"><use href="#i-plug"/></svg>Accessoires</span>
           </a>
           <a href="#produits" class="cat" data-filter="audio">
-            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-headphones"/></svg></span>
-            <img src="assets/img/cat-audio.jpg" alt="" loading="lazy">
-            <span class="cat__name">Audio</span>
+            <span class="cat__media"><img src="assets/img/cat-audio.jpg" alt="" loading="lazy"></span>
+            <span class="cat__name"><svg class="ico" viewBox="0 0 24 24"><use href="#i-headphones"/></svg>Audio</span>
           </a>
           <a href="#produits" class="cat" data-filter="montres">
-            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-watch"/></svg></span>
-            <img src="assets/img/cat-montres.jpg" alt="" loading="lazy">
-            <span class="cat__name">Montres connectées</span>
+            <span class="cat__media"><img src="assets/img/cat-montres.jpg" alt="" loading="lazy"></span>
+            <span class="cat__name"><svg class="ico" viewBox="0 0 24 24"><use href="#i-watch"/></svg>Montres connectées</span>
           </a>
           <a href="#produits" class="cat" data-filter="chargeurs">
-            <span class="cat__icon"><svg viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
-            <img src="assets/img/cat-cables.jpg" alt="" loading="lazy">
-            <span class="cat__name">Chargeurs &amp; câbles</span>
+            <span class="cat__media"><img src="assets/img/cat-cables.jpg" alt="" loading="lazy"></span>
+            <span class="cat__name"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg>Chargeurs &amp; câbles</span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Produits -->
-    <section class="section section--alt" id="produits">
+    <!-- Produits (section claire) -->
+    <section class="section section--light" id="produits">
       <div class="container">
         <div class="section__head">
-          <h2 class="section__title">Nos produits</h2>
-          <p class="section__lead">Une sélection de nos articles. Ajoutez vos articles au panier et passez commande directement sur le site.</p>
+          <h2 class="section__title">Nos produits.</h2>
+          <p class="section__lead">Ajoutez vos articles au panier et passez commande directement sur le site.</p>
         </div>
         <div class="filters" role="tablist" aria-label="Filtrer par catégorie">
           <button class="chip is-active" data-filter="all">Tous</button>
@@ -152,14 +140,14 @@
           <button class="chip" data-filter="chargeurs">Chargeurs &amp; câbles</button>
         </div>
         <div class="products" id="products"><!-- rempli par assets/js/main.js --></div>
-        <p class="products__note">Vous ne trouvez pas votre produit ? <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20je%20cherche%20un%20produit%20%3A%20" target="_blank" rel="noopener">Demandez-nous sur WhatsApp</a>, nous avons bien plus en boutique.</p>
+        <p class="products__note">Vous ne trouvez pas votre produit ? <a href="https://wa.me/221779329678?text=Bonjour%20Sakho%20%C3%89lectronic%2C%20je%20cherche%20un%20produit%20%3A%20" target="_blank" rel="noopener">Demandez-nous sur WhatsApp&nbsp;›</a></p>
       </div>
     </section>
 
     <!-- Marques -->
     <section class="brands" aria-label="Nos marques">
-      <div class="container brands__inner">
-        <span class="brands__title">Nos marques</span>
+      <div class="container">
+        <p class="brands__title">Les grandes marques, en boutique.</p>
         <ul class="brands__list">
           <li>Apple</li><li>Samsung</li><li>Xiaomi</li><li>Infinix</li><li>Tecno</li><li>HP</li><li>Lenovo</li><li>JBL</li>
         </ul>
@@ -169,65 +157,67 @@
     <!-- À propos -->
     <section class="section" id="a-propos">
       <div class="container about">
-        <div class="about__logo">
+        <figure class="about__logo">
           <img src="assets/img/logo.jpg" alt="Logo Sakho Électronic" loading="lazy" width="893" height="1079">
-        </div>
+        </figure>
         <div class="about__text">
-          <p class="eyebrow">Qui sommes-nous ?</p>
-          <h2 class="section__title section__title--left">À propos de Sakho Électronic</h2>
-          <p>Sakho Électronic est une boutique spécialisée dans la vente de smartphones, ordinateurs, accessoires et équipements électroniques. Nous proposons des produits de différentes grandes marques avec un service client à l'écoute.</p>
-          <blockquote class="about__quote">« Votre satisfaction, notre priorité. »</blockquote>
+          <p class="kicker">À propos</p>
+          <h2 class="section__title">À propos de Sakho Électronic.</h2>
+          <p class="about__body">Sakho Électronic est une boutique spécialisée dans la vente de smartphones, ordinateurs, accessoires et équipements électroniques. Nous proposons des produits de différentes grandes marques avec un service client à l'écoute.</p>
+          <blockquote class="about__quote">Votre satisfaction, notre priorité.</blockquote>
           <div class="about__stats">
-            <div><strong>Grandes</strong><span>marques</span></div>
-            <div><strong>Dakar</strong><span>Médina</span></div>
-            <div><strong>WhatsApp</strong><span>réponse rapide</span></div>
+            <div class="metric"><strong>Grandes</strong><span>marques</span></div>
+            <div class="metric"><strong>Dakar</strong><span>Médina</span></div>
+            <div class="metric"><strong>WhatsApp</strong><span>réponse rapide</span></div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Services -->
-    <section class="section section--alt" id="services">
+    <section class="section" id="services">
       <div class="container">
-        <div class="section__head">
-          <h2 class="section__title">Nos services</h2>
-          <p class="section__lead">Ce qui fait la différence chez Sakho Électronic.</p>
-        </div>
-        <div class="services">
-          <article class="service">
-            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-truck"/></svg></span>
-            <h3>Livraison</h3>
-            <p>Livraison disponible à Dakar et partout au Sénégal.</p>
-          </article>
-          <article class="service">
-            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-card"/></svg></span>
-            <h3>Paiement</h3>
-            <p>Plusieurs moyens de paiement disponibles.</p>
-          </article>
-          <article class="service">
-            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></span>
-            <h3>Conseil</h3>
-            <p>Nous vous aidons à choisir le produit adapté à vos besoins.</p>
-          </article>
-          <article class="service">
-            <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
-            <h3>Qualité</h3>
-            <p>Des produits soigneusement sélectionnés.</p>
-          </article>
+        <div class="panel">
+          <div class="section__head">
+            <h2 class="section__title">Nos services.</h2>
+            <p class="section__lead">Ce qui fait la différence chez Sakho Électronic.</p>
+          </div>
+          <div class="services">
+            <article class="service">
+              <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-truck"/></svg></span>
+              <h3>Livraison</h3>
+              <p>Livraison disponible à Dakar et partout au Sénégal.</p>
+            </article>
+            <article class="service">
+              <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-card"/></svg></span>
+              <h3>Paiement</h3>
+              <p>Plusieurs moyens de paiement disponibles.</p>
+            </article>
+            <article class="service">
+              <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></span>
+              <h3>Conseil</h3>
+              <p>Nous vous aidons à choisir le produit adapté à vos besoins.</p>
+            </article>
+            <article class="service">
+              <span class="service__icon"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
+              <h3>Qualité</h3>
+              <p>Des produits soigneusement sélectionnés.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Contact -->
-    <section class="section" id="contact">
+    <section class="section section--carbon" id="contact">
       <div class="container">
         <div class="contact">
           <div class="contact__info">
-            <h2 class="section__title section__title--left">Contactez-nous</h2>
+            <h2 class="section__title">Contactez-nous.</h2>
             <p class="section__lead">Une question, une commande ? Écrivez-nous ou passez nous voir en boutique.</p>
 
             <div class="contact__row">
-              <span class="contact__icon contact__icon--wa"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></span>
+              <span class="contact__icon"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></span>
               <div>
                 <h3>WhatsApp</h3>
                 <a href="https://wa.me/221779329678" target="_blank" rel="noopener">+221 77 932 96 78</a><br>

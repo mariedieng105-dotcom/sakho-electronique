@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.toggle('no-scroll', open);
   });
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  window.addEventListener('resize', () => { if (window.innerWidth > 960) closeMenu(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 833) closeMenu(); });
 
   // Ombre du header au défilement
   const header = document.getElementById('header');
