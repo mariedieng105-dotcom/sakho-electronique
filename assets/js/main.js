@@ -340,8 +340,15 @@ function renderProducts() {
 
 function applyFilter(filter) {
   document.querySelectorAll('.chip').forEach(c => c.classList.toggle('is-active', c.dataset.filter === filter));
+  let i = 0;
   document.querySelectorAll('.product').forEach(p => {
     p.hidden = !(filter === 'all' || p.dataset.cat === filter);
+    if (!p.hidden && ANIMATE) {
+      p.classList.remove('reveal', 'is-visible', 'is-filtered-in');
+      void p.offsetWidth;
+      p.style.setProperty('--i', i++);
+      p.classList.add('is-filtered-in');
+    }
   });
 }
 
@@ -354,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = e.target.closest('.add-to-cart');
     if (!btn) return;
     addToCart(btn.dataset.id);
+    flyToCart(btn.closest('.product').querySelector('.product__img img'));
     const label = btn.querySelector('span');
     btn.classList.add('is-added');
     label.textContent = 'Ajouté ✓';
@@ -451,4 +459,131 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  initAnimations();
 });
+
+/* =========================================================
+   Animations
+   ========================================================= */
+const ANIMATE = document.documentElement.classList.contains('js-anim');
+
+function flyToCart(img) {
+  const target = document.getElementById('cartOpen');
+  if (!ANIMATE || !img || !target.animate) return;
+  const from = img.getBoundingClientRect();
+  const to = target.getBoundingClientRect();
+  const clone = img.cloneNode();
+  clone.className = 'fly-img';
+  Object.assign(clone.style, { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px` });
+  document.body.appendChild(clone);
+  const dx = to.left + to.width / 2 - (from.left + from.width / 2);
+  const dy = to.top + to.height / 2 - (from.top + from.height / 2);
+  clone.animate([
+    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+    { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 80}px) scale(.55) rotate(-8deg)`, opacity: 1, offset: 0.55 },
+    { transform: `translate(${dx}px, ${dy}px) scale(.08) rotate(-20deg)`, opacity: 0.4 },
+  ], { duration: 800, easing: 'cubic-bezier(.5, 0, .3, 1)' }).onfinish = () => {
+    clone.remove();
+    target.classList.remove('is-hit');
+    void target.offsetWidth;
+    target.classList.add('is-hit');
+  };
+}
+
+function initAnimations() {
+  // Barre de progression + parallaxe de l'image du hero (même boucle rAF)
+  const bar = document.getElementById('scrollProgress');
+  const heroImg = document.querySelector('#heroStage img');
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+      if (ANIMATE && heroImg && scrollY < innerHeight * 1.5) {
+        heroImg.style.setProperty('--py', `${Math.min(scrollY * 0.12, 80)}px`);
+      }
+      ticking = false;
+    });
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Défilement continu des marques (on duplique la liste pour boucler)
+  const marquee = document.querySelector('.marquee');
+  if (marquee && ANIMATE) {
+    const track = marquee.querySelector('.marquee__track');
+    [...track.children].forEach(li => {
+      const clone = li.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+    marquee.classList.add('is-running');
+  }
+
+  if (!ANIMATE) return;
+
+  // Apparition au défilement, en cascade dans chaque groupe
+  const groups = [
+    ['.section__head', 'reveal'],
+    ['.categories > .cat', 'reveal reveal--zoom'],
+    ['.filters', 'reveal'],
+    ['.products > .product', 'reveal'],
+    ['.products__note', 'reveal'],
+    ['.brands__title', 'reveal'],
+    ['.about__logo', 'reveal reveal--left'],
+    ['.about__text > *', 'reveal'],
+    ['.services > .service', 'reveal reveal--zoom'],
+    ['.contact__info', 'reveal reveal--left'],
+    ['.contact__map', 'reveal reveal--right'],
+    ['.footer__grid > *', 'reveal'],
+  ];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-visible');
+      io.unobserve(e.target);
+      // Une fois apparu, on retire les classes pour laisser place à l'effet 3D au survol.
+      const done = ev => {
+        if (ev.target !== e.target || ev.propertyName !== 'transform') return;
+        e.target.classList.remove('reveal', 'reveal--zoom', 'reveal--left', 'reveal--right', 'is-visible');
+        e.target.removeEventListener('transitionend', done);
+      };
+      e.target.addEventListener('transitionend', done);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  groups.forEach(([sel, cls]) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add(...cls.split(' '));
+      el.style.setProperty('--i', i % 8);
+      io.observe(el);
+    });
+  });
+
+  // Fin de l'animation de filtre : on libère la transformation pour l'effet 3D
+  document.getElementById('products').addEventListener('animationend', e => {
+    if (e.target.classList.contains('product')) e.target.classList.remove('is-filtered-in');
+  });
+
+  // Effet 3D qui suit la souris (uniquement avec une souris)
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.cat, .product, .service').forEach(card => {
+      card.classList.add('tilt');
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.classList.add('is-tilting');
+        card.style.setProperty('--rx', `${(-y * 8).toFixed(2)}deg`);
+        card.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
+      });
+      card.addEventListener('pointerleave', () => {
+        card.classList.remove('is-tilting');
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+}

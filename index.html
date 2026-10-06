@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sakho Électronic – Boutique d'électronique à Dakar</title>
   <meta name="description" content="Sakho Électronic : smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques à Médina, Dakar. Commandez directement sur le site.">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/img/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    // Active les animations, sauf si l'appareil demande de les réduire.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-anim');
+  </script>
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <!-- Barre d'infos -->
   <div class="topbar">
@@ -65,9 +70,12 @@
   <main>
     <!-- Hero -->
     <section class="hero" id="accueil">
+      <div class="hero__blobs" aria-hidden="true">
+        <span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span>
+      </div>
       <div class="container hero__inner">
         <p class="hero__kicker">Sakho Électronic</p>
-        <h1 class="hero__title">Votre boutique d’électronique de confiance.</h1>
+        <h1 class="hero__title">Votre boutique <span class="hero__accent">d’électronique</span> de confiance.</h1>
         <p class="hero__sub">Smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques.</p>
         <div class="hero__btns">
           <a href="#produits" class="btn btn--primary btn--lg">Voir nos produits</a>
@@ -76,7 +84,7 @@
             Nous contacter sur WhatsApp
           </a>
         </div>
-        <figure class="hero__stage">
+        <figure class="hero__stage" id="heroStage">
           <img src="assets/img/hero.jpg" alt="Smartphones, ordinateur portable, montre connectée, écouteurs et chargeur" width="650" height="330">
         </figure>
         <ul class="hero__badges">
@@ -88,7 +96,7 @@
     </section>
 
     <!-- Catégories -->
-    <section class="section section--carbon" id="categories">
+    <section class="section section--white" id="categories">
       <div class="container">
         <div class="section__head">
           <h2 class="section__title">Découvrez nos produits.</h2>
@@ -124,7 +132,7 @@
     </section>
 
     <!-- Produits (section claire) -->
-    <section class="section section--light" id="produits">
+    <section class="section section--alt" id="produits">
       <div class="container">
         <div class="section__head">
           <h2 class="section__title">Nos produits.</h2>
@@ -148,14 +156,16 @@
     <section class="brands" aria-label="Nos marques">
       <div class="container">
         <p class="brands__title">Les grandes marques, en boutique.</p>
-        <ul class="brands__list">
-          <li>Apple</li><li>Samsung</li><li>Xiaomi</li><li>Infinix</li><li>Tecno</li><li>HP</li><li>Lenovo</li><li>JBL</li>
-        </ul>
+        <div class="marquee">
+          <ul class="brands__list marquee__track">
+            <li>Apple</li><li>Samsung</li><li>Xiaomi</li><li>Infinix</li><li>Tecno</li><li>HP</li><li>Lenovo</li><li>JBL</li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <!-- À propos -->
-    <section class="section" id="a-propos">
+    <section class="section section--white" id="a-propos">
       <div class="container about">
         <figure class="about__logo">
           <img src="assets/img/logo.jpg" alt="Logo Sakho Électronic" loading="lazy" width="893" height="1079">
@@ -175,7 +185,7 @@
     </section>
 
     <!-- Services -->
-    <section class="section" id="services">
+    <section class="section section--white" id="services">
       <div class="container">
         <div class="panel">
           <div class="section__head">
@@ -209,7 +219,7 @@
     </section>
 
     <!-- Contact -->
-    <section class="section section--carbon" id="contact">
+    <section class="section section--alt" id="contact">
       <div class="container">
         <div class="contact">
           <div class="contact__info">
