@@ -1,9 +1,9 @@
 /* =========================================================
    SAKHO ÉLECTRONIC – script du site vitrine
-   Pour modifier les produits : éditez simplement la liste
-   PRODUCTS ci-dessous (nom, description, prix, image, catégorie).
-   Laissez price à null pour afficher « Prix sur demande ».
-   Gardez un id unique (sans espace) par produit : il sert au panier.
+   Les produits sont gérés depuis le mode admin du site et enregistrés
+   dans Supabase (voir assets/js/admin.js et supabase/INSTRUCTIONS.md).
+   La liste DEFAULT_PRODUCTS ci-dessous ne sert que de secours, si la
+   base n'est pas configurée ou injoignable.
    ========================================================= */
 
 const WHATSAPP_NUMBER = '221779329678';
@@ -12,7 +12,7 @@ const WHATSAPP_NUMBER = '221779329678';
 // dans le Google Sheet (voir apps-script/INSTRUCTIONS.md).
 const ORDER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzw3r2D1VpUCeDmGd9eekVggUbKhcpSIupj65jcLvn7-IqPSDbeA7Wl1t60x-iTdzh5XQ/exec';
 
-const PRODUCTS = [
+const DEFAULT_PRODUCTS = [
   { id: 'iphone', name: 'iPhone', desc: 'Les derniers modèles Apple, neufs et garantis.', price: null, img: 'p-iphone.jpg', cat: 'smartphones' },
   { id: 'samsung-galaxy', name: 'Samsung Galaxy', desc: 'Gamme Galaxy S, A et Z pour tous les budgets.', price: null, img: 'p-samsung.jpg', cat: 'smartphones' },
   { id: 'xiaomi', name: 'Xiaomi', desc: 'Redmi et Xiaomi : performance au meilleur prix.', price: null, img: 'p-xiaomi.jpg', cat: 'smartphones' },
@@ -27,7 +27,36 @@ const PRODUCTS = [
   { id: 'cables-usb', name: 'Câbles USB', desc: 'Câbles USB-C, Lightning et micro-USB résistants.', price: null, img: 'cat-cables.jpg', cat: 'chargeurs' },
 ];
 
-const PRODUCT_BY_ID = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+let PRODUCTS = DEFAULT_PRODUCTS;
+let PRODUCT_BY_ID = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+let currentFilter = 'all';
+
+const CATEGORIES = {
+  smartphones: 'Smartphones', ordinateurs: 'Ordinateurs', accessoires: 'Accessoires',
+  audio: 'Audio', montres: 'Montres connectées', chargeurs: 'Chargeurs & câbles',
+};
+
+// Remplace la liste des produits (appelé par admin.js quand la base répond).
+// fromDatabase = true : la liste fait foi, on retire du panier les produits supprimés.
+function setProducts(list, fromDatabase = false) {
+  PRODUCTS = list;
+  PRODUCT_BY_ID = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+  if (fromDatabase) {
+    const before = cart.length;
+    cart = cart.filter(l => PRODUCT_BY_ID[l.id]);
+    if (cart.length !== before) saveCart();
+  }
+  renderProducts();
+  renderCart();
+}
+
+// Adresse d'image sûre : URL https, chemin du site, ou nom de fichier dans assets/img/.
+function imgSrc(p) {
+  const v = String(p.img || '');
+  if (/^https:\/\//i.test(v) || /^assets\/[\w\-./]+$/.test(v)) return v;
+  if (/^[\w\-.]+$/.test(v)) return `assets/img/${v}`;
+  return 'assets/img/logo.jpg';
+}
 const CART_KEY = 'sakho-cart';
 const MAX_QTY = 20;
 
@@ -56,7 +85,7 @@ function loadCart() {
     const raw = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
     if (!Array.isArray(raw)) return [];
     return raw
-      .filter(l => l && PRODUCT_BY_ID[l.id])
+      .filter(l => l && typeof l.id === 'string')
       .map(l => ({ id: l.id, qty: Math.min(MAX_QTY, Math.max(1, parseInt(l.qty, 10) || 1)) }));
   } catch (e) {
     return [];
@@ -67,15 +96,20 @@ function saveCart() {
   try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) { /* stockage indisponible */ }
 }
 
+// Lignes du panier dont le produit existe (les autres sont ignorées)
+function cartLines() {
+  return cart.filter(l => PRODUCT_BY_ID[l.id]);
+}
+
 function cartCount() {
-  return cart.reduce((n, l) => n + l.qty, 0);
+  return cartLines().reduce((n, l) => n + l.qty, 0);
 }
 
 function cartTotals() {
   let total = 0;
   let hasUnpriced = false;
   let hasPriced = false;
-  cart.forEach(l => {
+  cartLines().forEach(l => {
     const p = PRODUCT_BY_ID[l.id];
     if (p.price == null) hasUnpriced = true;
     else { hasPriced = true; total += p.price * l.qty; }
@@ -116,16 +150,17 @@ function renderCart() {
   badge.textContent = count;
   badge.hidden = count === 0;
 
-  const empty = cart.length === 0;
+  const lines = cartLines();
+  const empty = lines.length === 0;
   document.getElementById('cartEmpty').hidden = !empty;
   document.getElementById('cartFoot').hidden = empty;
 
-  document.getElementById('cartList').innerHTML = cart.map(l => {
+  document.getElementById('cartList').innerHTML = lines.map(l => {
     const p = PRODUCT_BY_ID[l.id];
     const price = p.price == null ? 'Prix sur demande' : money(p.price * l.qty);
     return `
-      <li class="cart-item" data-id="${p.id}">
-        <img src="assets/img/${p.img}" alt="" class="cart-item__img">
+      <li class="cart-item" data-id="${escapeHtml(p.id)}">
+        <img src="${escapeHtml(imgSrc(p))}" alt="" class="cart-item__img">
         <div class="cart-item__info">
           <p class="cart-item__name">${escapeHtml(p.name)}</p>
           <p class="cart-item__price${p.price == null ? ' cart-item__price--ask' : ''}">${price}</p>
@@ -239,7 +274,7 @@ function makeOrderId() {
 
 function buildOrder(form) {
   const f = form.elements;
-  const items = cart.map(l => {
+  const items = cartLines().map(l => {
     const p = PRODUCT_BY_ID[l.id];
     return { name: p.name, qty: l.qty, price: p.price };
   });
@@ -286,7 +321,7 @@ async function sendOrder(order) {
 function renderOrderSummary() {
   document.getElementById('orderSummary').innerHTML = `
     <p class="order-form__summary-title">Récapitulatif</p>
-    <ul>${cart.map(l => `<li><span>${escapeHtml(PRODUCT_BY_ID[l.id].name)}</span><span>× ${l.qty}</span></li>`).join('')}</ul>
+    <ul>${cartLines().map(l => `<li><span>${escapeHtml(PRODUCT_BY_ID[l.id].name)}</span><span>× ${l.qty}</span></li>`).join('')}</ul>
     <p class="order-form__summary-total"><span>Total</span><strong>${escapeHtml(totalLabel())}</strong></p>`;
 }
 
@@ -296,7 +331,7 @@ async function onOrderSubmit(e) {
   const errorBox = document.getElementById('orderError');
   const submit = document.getElementById('orderSubmit');
   errorBox.hidden = true;
-  if (cart.length === 0) { showView('items'); return; }
+  if (cartLines().length === 0) { showView('items'); return; }
   if (!validateOrderForm(form)) return;
 
   const order = buildOrder(form);
@@ -325,20 +360,37 @@ async function onOrderSubmit(e) {
 function renderProducts() {
   const grid = document.getElementById('products');
   grid.innerHTML = PRODUCTS.map(p => `
-      <article class="product" data-cat="${p.cat}">
-        <div class="product__img"><img src="assets/img/${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"></div>
+      <article class="product" data-cat="${escapeHtml(p.cat)}" data-id="${escapeHtml(p.id)}">
+        <div class="admin-tools" aria-label="Outils d'administration">
+          <button type="button" class="admin-tools__btn" data-admin="edit" aria-label="Modifier ${escapeHtml(p.name)}">
+            <svg viewBox="0 0 24 24"><use href="#i-edit"/></svg>
+          </button>
+          <button type="button" class="admin-tools__btn admin-tools__btn--danger" data-admin="delete" aria-label="Supprimer ${escapeHtml(p.name)}">
+            <svg viewBox="0 0 24 24"><use href="#i-trash"/></svg>
+          </button>
+        </div>
+        <div class="product__img"><img src="${escapeHtml(imgSrc(p))}" alt="${escapeHtml(p.name)}" loading="lazy"></div>
         <div class="product__body">
           <h3 class="product__name">${escapeHtml(p.name)}</h3>
-          <p class="product__desc">${escapeHtml(p.desc)}</p>
+          <p class="product__desc">${escapeHtml(p.desc || '')}</p>
           ${formatPrice(p.price)}
-          <button type="button" class="btn btn--primary btn--block add-to-cart" data-id="${p.id}">
+          <button type="button" class="btn btn--primary btn--block add-to-cart" data-id="${escapeHtml(p.id)}">
             <svg class="ico" viewBox="0 0 24 24"><use href="#i-cart"/></svg> <span>Ajouter au panier</span>
           </button>
         </div>
       </article>`).join('');
+  if (!PRODUCTS.length) {
+    grid.innerHTML = '<p class="products__empty">Aucun produit pour le moment.</p>';
+  }
+  // Conserver le filtre choisi par le visiteur
+  grid.querySelectorAll('.product').forEach(el => {
+    el.hidden = !(currentFilter === 'all' || el.dataset.cat === currentFilter);
+  });
+  if (typeof bindTilt === 'function') grid.querySelectorAll('.product').forEach(bindTilt);
 }
 
 function applyFilter(filter) {
+  currentFilter = filter;
   document.querySelectorAll('.chip').forEach(c => c.classList.toggle('is-active', c.dataset.filter === filter));
   let i = 0;
   document.querySelectorAll('.product').forEach(p => {
@@ -568,22 +620,26 @@ function initAnimations() {
   });
 
   // Effet 3D qui suit la souris (uniquement avec une souris)
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.cat, .product, .service').forEach(card => {
-      card.classList.add('tilt');
-      card.addEventListener('pointermove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.classList.add('is-tilting');
-        card.style.setProperty('--rx', `${(-y * 8).toFixed(2)}deg`);
-        card.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
-      });
-      card.addEventListener('pointerleave', () => {
-        card.classList.remove('is-tilting');
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-      });
-    });
-  }
+  document.querySelectorAll('.cat, .product, .service').forEach(bindTilt);
+}
+
+const CAN_TILT = ANIMATE && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+function bindTilt(card) {
+  if (!CAN_TILT || card.dataset.tilt) return;
+  card.dataset.tilt = '1';
+  card.classList.add('tilt');
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.classList.add('is-tilting');
+    card.style.setProperty('--rx', `${(-y * 8).toFixed(2)}deg`);
+    card.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
+  });
+  card.addEventListener('pointerleave', () => {
+    card.classList.remove('is-tilting');
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  });
 }

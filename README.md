@@ -5,10 +5,14 @@ Site statique (HTML/CSS/JS, sans dépendance) pour la boutique Sakho Électronic
 - Ouvrir `index.html` dans un navigateur pour le consulter.
 - Hébergement : n'importe quel hébergeur statique (GitHub Pages, Netlify…).
 
-## Modifier les produits
-Éditer la liste `PRODUCTS` en haut de `assets/js/main.js` :
-nom, description, prix (`null` = « Prix sur demande »), image (dans `assets/img/`) et catégorie.
-Gardez un `id` unique (sans espace) pour chaque produit : il sert au panier.
+## Modifier les produits (mode admin)
+Les produits sont stockés dans **Supabase** et se gèrent depuis le site, en mode admin
+(petit cadenas discret en bas de page, ou `#admin` à la fin de l'adresse) protégé par mot de passe.
+Les changements apparaissent en temps réel chez tous les visiteurs.
+Installation : voir `supabase/INSTRUCTIONS.md`. Configuration : `assets/js/config.js`.
+
+Tant que Supabase n'est pas configuré, le site affiche la liste de secours `DEFAULT_PRODUCTS`
+de `assets/js/main.js`.
 
 ## Panier et commandes
 - Le client ajoute des produits au panier (icône en haut à droite), modifie les quantités,
