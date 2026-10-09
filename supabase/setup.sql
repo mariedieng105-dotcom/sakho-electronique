@@ -26,6 +26,9 @@ as $$
   );
 $$;
 
+-- Les règles de sécurité appellent cette fonction : elle doit rester exécutable
+grant execute on function public.is_admin() to anon, authenticated;
+
 -- 2. Produits ---------------------------------------------------------
 create table if not exists public.products (
   id          text primary key default gen_random_uuid()::text,
