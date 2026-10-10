@@ -392,6 +392,7 @@ function renderProducts() {
 function applyFilter(filter) {
   currentFilter = filter;
   document.querySelectorAll('.chip').forEach(c => c.classList.toggle('is-active', c.dataset.filter === filter));
+  document.querySelectorAll('.cat').forEach(c => c.classList.toggle('is-active', c.dataset.filter === filter));
   let i = 0;
   document.querySelectorAll('.product').forEach(p => {
     p.hidden = !(filter === 'all' || p.dataset.cat === filter);
@@ -468,8 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Filtres produits
   document.querySelectorAll('.chip').forEach(chip =>
     chip.addEventListener('click', () => applyFilter(chip.dataset.filter)));
-  document.querySelectorAll('.cat').forEach(cat =>
-    cat.addEventListener('click', () => applyFilter(cat.dataset.filter)));
+  // Catégories (délégation : fonctionne aussi pour les cartes dupliquées de la bande défilante)
+  document.addEventListener('click', e => {
+    const cat = e.target.closest('.cat');
+    if (cat) applyFilter(cat.dataset.filter);
+  });
 
   // Menu mobile
   const burger = document.getElementById('burger');
@@ -512,8 +516,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  initCategoryRail();
   initAnimations();
 });
+
+/* =========================================================
+   Bande défilante des catégories
+   - défile toute seule, en boucle infinie (cartes dupliquées) ;
+   - se met en pause dès que le visiteur la touche, la survole ou la fait glisser ;
+   - flèches sur ordinateur, glisser au doigt sur téléphone ;
+   - sans animation (réglage « réduire les animations ») : simple bande à faire glisser.
+   ========================================================= */
+function initCategoryRail() {
+  const wrap = document.getElementById('catRailWrap');
+  const rail = document.getElementById('catRail');
+  const track = document.getElementById('catTrack');
+  if (!wrap || !rail || !track) return;
+  const originals = [...track.children];
+  const bar = document.getElementById('catProgress');
+  const loop = ANIMATE;
+  const SPEED = 34;               // pixels par seconde
+  const reasons = new Set();      // raisons de pause en cours
+  const timers = {};
+
+  // Pause temporaire (ex. après un glissement au doigt)
+  const hold = (reason, ms) => {
+    reasons.add(reason);
+    clearTimeout(timers[reason]);
+    timers[reason] = setTimeout(() => reasons.delete(reason), ms);
+  };
+
+  originals.forEach((c, k) => c.style.setProperty('--k', k));
+  if (loop) {
+    originals.forEach((c, k) => {
+      const clone = c.cloneNode(true);
+      clone.classList.add('cat--clone');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.tabIndex = -1;
+      clone.style.setProperty('--k', k + originals.length);
+      track.appendChild(clone);
+    });
+  } else {
+    rail.classList.add('is-static');
+  }
+
+  // Largeur d'un « tour » complet (position de la 1re copie)
+  let half = 0;
+  const measure = () => { half = loop ? track.children[originals.length].offsetLeft - originals[0].offsetLeft : 0; };
+  measure();
+  addEventListener('resize', measure);
+  const step = () => originals[0].offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 16);
+
+  // Barre de progression sous la bande
+  const updateBar = () => {
+    if (!bar) return;
+    let ratio;
+    if (loop && half) ratio = (rail.scrollLeft % half) / half;
+    else {
+      const max = rail.scrollWidth - rail.clientWidth;
+      ratio = max > 0 ? rail.scrollLeft / max : 1;
+    }
+    bar.style.transform = `scaleX(${Math.max(0.05, ratio).toFixed(4)})`;
+  };
+  rail.addEventListener('scroll', updateBar, { passive: true });
+  updateBar();
+
+  // Flèches (ordinateur)
+  const go = dir => {
+    hold('nav', 3500);
+    if (loop && dir < 0 && rail.scrollLeft < step()) rail.scrollLeft += half;  // saut invisible pour boucler
+    rail.scrollBy({ left: dir * step(), behavior: ANIMATE ? 'smooth' : 'auto' });
+  };
+  wrap.querySelector('.cat-nav--prev').addEventListener('click', () => go(-1));
+  wrap.querySelector('.cat-nav--next').addEventListener('click', () => go(1));
+
+  if (!loop) return;
+
+  // Pauses : survol à la souris, doigt posé, molette, focus clavier
+  wrap.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') reasons.add('hover'); });
+  wrap.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') reasons.delete('hover'); });
+  rail.addEventListener('touchstart', () => reasons.add('touch'), { passive: true });
+  const touchEnd = () => { reasons.delete('touch'); hold('after-touch', 2500); };
+  rail.addEventListener('touchend', touchEnd, { passive: true });
+  rail.addEventListener('touchcancel', touchEnd, { passive: true });
+  rail.addEventListener('wheel', () => hold('wheel', 2500), { passive: true });
+  rail.addEventListener('focusin', () => reasons.add('focus'));
+  rail.addEventListener('focusout', () => reasons.delete('focus'));
+
+  // Défilement continu (uniquement quand la bande est visible à l'écran)
+  let raf = 0, last = 0, pos = 0, running = false;
+  const frame = t => {
+    raf = requestAnimationFrame(frame);
+    const dt = last ? Math.min(t - last, 50) : 16;
+    last = t;
+    if (reasons.size) { running = false; return; }
+    if (!running) { pos = rail.scrollLeft; running = true; }
+    pos += SPEED * dt / 1000;
+    if (half && pos >= half) pos -= half;
+    rail.scrollLeft = pos;
+  };
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !raf) { last = 0; running = false; raf = requestAnimationFrame(frame); }
+    if (!e.isIntersecting && raf) { cancelAnimationFrame(raf); raf = 0; }
+  }).observe(rail);
+}
 
 /* =========================================================
    Animations
@@ -580,7 +686,7 @@ function initAnimations() {
   // Apparition au défilement, en cascade dans chaque groupe
   const groups = [
     ['.section__head', 'reveal'],
-    ['.categories > .cat', 'reveal reveal--zoom'],
+    ['.cat-rail-wrap', 'reveal reveal--zoom'],
     ['.filters', 'reveal'],
     ['.products > .product', 'reveal'],
     ['.products__note', 'reveal'],

@@ -54,6 +54,8 @@ a { color: inherit; text-decoration: none; }
 h1, h2, h3, h4 { margin: 0; font-weight: 600; color: var(--ink); }
 p { margin: 0; }
 figure { margin: 0; }
+/* Les animations d'apparition latérales ne doivent jamais élargir la page (téléphone) */
+main { overflow-x: hidden; overflow-x: clip; }
 button { font: inherit; letter-spacing: inherit; cursor: pointer; }
 
 .container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 22px; }
@@ -229,19 +231,67 @@ a.topbar__item:hover { color: var(--ink); }
 }
 .tilt.is-tilting { transition: transform .12s linear, box-shadow .5s ease; }
 
-/* ---------- Catégories ---------- */
-.categories { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
-.cat {
-  background: var(--porcelain); border-radius: var(--r-card); padding: 12px 12px 18px;
-  display: flex; flex-direction: column; gap: 14px;
+/* ---------- Catégories : bande défilante ---------- */
+.cat-rail-wrap { position: relative; }
+.cat-rail {
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none; outline: none;
+  padding: 14px 6px 28px; margin: -14px -6px 0;   /* place pour l'élévation et l'ombre au survol */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
 }
+.cat-rail::-webkit-scrollbar { display: none; }
+.cat-rail.is-static { scroll-snap-type: x proximity; }
+.cat-rail.is-static .cat { scroll-snap-align: start; }
+.cat-track { display: flex; gap: 16px; width: max-content; }
+.cat {
+  position: relative; overflow: hidden; isolation: isolate; flex: 0 0 176px;
+  background: var(--porcelain); border-radius: var(--r-card); padding: 10px 10px 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+/* Reflet lumineux qui passe sur les cartes, l'une après l'autre */
+.cat::after {
+  content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .7) 50%, transparent 65%);
+  transform: translateX(-130%);
+  animation: catShine 7s ease-in-out infinite; animation-delay: calc(var(--k, 0) * .45s);
+}
+@keyframes catShine { 0%, 72% { transform: translateX(-130%); } 88%, 100% { transform: translateX(130%); } }
 .cat:hover { --ty: -6px; box-shadow: var(--shadow-hover); }
-.cat__media { display: grid; place-items: center; aspect-ratio: 1; background: var(--white); border-radius: 20px; padding: 14px; overflow: hidden; }
-.cat__media img { max-height: 100%; width: auto; object-fit: contain; filter: brightness(1.05); transition: transform .6s var(--ease-spring); }
-.cat:hover .cat__media img { transform: scale(1.12) rotate(-3deg); }
-.cat__name { display: flex; align-items: center; gap: 8px; padding: 0 6px; font-size: 14px; font-weight: 600; line-height: 1.29; }
+.cat.is-active { background: var(--orange-soft); box-shadow: 0 0 0 2px var(--orange), var(--shadow-hover); }
+.cat.is-active .cat__name { color: var(--orange-ink); }
+.cat__media { display: grid; place-items: center; aspect-ratio: 1; background: var(--white); border-radius: 20px; padding: 12px; overflow: hidden; }
+/* Les produits « flottent » doucement, en décalé */
+.cat__media img {
+  max-height: 100%; width: auto; object-fit: contain; filter: brightness(1.05);
+  transition: transform .6s var(--ease-spring);
+  animation: catFloat 4.5s ease-in-out infinite; animation-delay: calc(var(--k, 0) * -.7s);
+}
+@keyframes catFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+.cat:hover .cat__media img { transform: scale(1.14) rotate(-4deg); }
+.cat__name { display: flex; align-items: center; gap: 8px; padding: 0 6px; font-size: 14px; font-weight: 600; line-height: 1.29; transition: color .3s; }
 .cat__name .ico { color: var(--orange); transition: transform .5s var(--ease-spring); }
 .cat:hover .cat__name .ico { transform: scale(1.3) rotate(-10deg); }
+
+.cat-nav {
+  position: absolute; top: calc(50% - 30px); z-index: 3; width: 44px; height: 44px; padding: 0; border: 0;
+  border-radius: 50%; display: grid; place-items: center; color: var(--ink);
+  background: rgba(255, 255, 255, .92); box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  opacity: 0; transform: scale(.8);
+  transition: opacity .3s ease, transform .45s var(--ease-spring), background-color .2s, color .2s;
+}
+.cat-nav svg { width: 20px; height: 20px; }
+.cat-nav--prev { left: -10px; }
+.cat-nav--next { right: -10px; }
+.cat-rail-wrap:hover .cat-nav, .cat-nav:focus-visible { opacity: 1; transform: none; }
+.cat-nav:hover { background: var(--orange); color: var(--white); transform: scale(1.08); }
+@media (hover: none) { .cat-nav { display: none; } }
+
+.cat-progress { width: min(220px, 50%); height: 3px; margin: 0 auto; border-radius: 3px; background: var(--line-soft); overflow: hidden; }
+.cat-progress span {
+  display: block; width: 100%; height: 100%; border-radius: inherit;
+  background: linear-gradient(90deg, var(--orange), #ffb27a); transform-origin: 0 50%; transform: scaleX(0);
+}
 
 /* ---------- Produits ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
@@ -569,7 +619,6 @@ a.topbar__item:hover { color: var(--ink); }
    Responsive
    ========================================================= */
 @media (max-width: 1068px) {
-  .categories { grid-template-columns: repeat(3, 1fr); }
   .products { grid-template-columns: repeat(3, 1fr); }
   .services { grid-template-columns: repeat(2, 1fr); }
   .footer__grid { grid-template-columns: 1fr 1fr; }
@@ -613,8 +662,11 @@ a.topbar__item:hover { color: var(--ink); }
   .topbar__inner { justify-content: center; }
   .topbar__inner > .topbar__item { display: none; }
   .section__head { margin-bottom: 32px; }
-  .categories { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .cat { border-radius: 24px; }
+  .cat-rail { margin: -14px -16px 0; padding: 14px 16px 24px; }
+  .cat-track { gap: 12px; }
+  .cat { flex-basis: 136px; padding: 8px 8px 12px; gap: 10px; border-radius: 22px; }
+  .cat__media { border-radius: 16px; padding: 10px; }
+  .cat__name { font-size: 13px; gap: 6px; padding: 0 4px; }
   .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .product { border-radius: 22px; }
   .product__img { padding: 16px; }
