@@ -6,8 +6,9 @@
    par les règles (RLS) de la base, pas par le secret de cette clé.
    ========================================================= */
 window.SAKHO_CONFIG = {
-  SUPABASE_URL: '',        // ex. 'https://abcdefgh.supabase.co'
-  SUPABASE_ANON_KEY: '',   // ex. 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....'
+  SUPABASE_URL: 'https://byzylfpcxpiyakjavrlw.supabase.co',
+  // Clé « publishable » (publique). Ne jamais mettre ici la clé secrète (sb_secret_…).
+  SUPABASE_ANON_KEY: 'sb_publishable_F4Oafo0BfhSWUn7oM4KoyQ_oApdBMCj',
 
   // Compte administrateur créé dans Supabase (Authentication → Users).
   // Ce n'est pas forcément une vraie adresse : elle sert d'identifiant.

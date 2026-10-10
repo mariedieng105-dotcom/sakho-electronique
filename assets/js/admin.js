@@ -73,7 +73,9 @@
     if (isAdmin) return;
     const dlg = $('adminLogin');
     $('adminLoginError').textContent = CONFIGURED ? ''
-      : 'La base de données n’est pas encore configurée (voir supabase/INSTRUCTIONS.md).';
+      : cfg.SUPABASE_URL
+        ? 'Connexion à la base impossible pour le moment. Vérifiez votre connexion Internet et rechargez la page.'
+        : 'La base de données n’est pas encore configurée (voir supabase/INSTRUCTIONS.md).';
     $('adminPassword').value = '';
     $('adminLoginSubmit').disabled = !CONFIGURED;
     dlg.showModal();
