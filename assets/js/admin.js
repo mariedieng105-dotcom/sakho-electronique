@@ -11,8 +11,11 @@
   const db = CONFIGURED ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
   const BUCKET = 'products';
   const MAX_SOURCE = 30 * 1024 * 1024;  // photo d'origine (téléphone) acceptée jusqu'à 30 Mo
-  const MAX_SIDE = 1200;                 // la photo est réduite à 1200 px de côté maximum
-  const JPEG_QUALITY = 0.85;
+  // Photos légères (~50 à 150 Ko) : elles restent nettes sur les cartes produits
+  // et ménagent le quota de téléchargement (egress) de l'offre gratuite Supabase.
+  const MAX_SIDE = 800;                  // la photo est réduite à 800 px de côté maximum
+  const JPEG_QUALITY = 0.8;
+  const CACHE_SECONDS = '31536000';      // 1 an : chaque photo a un nom unique, jamais réécrit
 
   let isAdmin = false;
 
@@ -184,7 +187,7 @@
   async function uploadImage(file) {
     const blob = await compressImage(file);
     const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
-    const { error } = await db.storage.from(BUCKET).upload(path, blob, { contentType: 'image/jpeg', upsert: false });
+    const { error } = await db.storage.from(BUCKET).upload(path, blob, { contentType: 'image/jpeg', cacheControl: CACHE_SECONDS, upsert: false });
     if (error) throw new Error('Envoi de la photo impossible : ' + error.message);
     return db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
   }

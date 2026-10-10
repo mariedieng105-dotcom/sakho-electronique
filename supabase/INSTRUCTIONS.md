@@ -61,6 +61,25 @@ Supabase → **Authentication** → **Users** → sur la ligne `admin@sakho-elec
 menu **⋯ → Delete user**, puis recréez-le (étape 3) avec le nouveau mot de passe.
 Les produits ne sont pas touchés.
 
+## Limites de l'offre gratuite (et comment éviter un blocage)
+Les limites Supabase « Free » sont comptées **par organisation** et **par mois** :
+
+| Ressource | Limite gratuite | Pour la boutique |
+|---|---|---|
+| Base de données | 500 Mo | plus de 100 000 produits : pas un souci |
+| Stockage des photos | 1 Go | environ 10 000 photos (le site les réduit à ~50–150 Ko) |
+| Téléchargements (egress) | 5 Go / mois | **le point à surveiller** : chaque visiteur télécharge les photos qu'il voit |
+| Temps réel | 200 visiteurs connectés en même temps | largement suffisant |
+
+- Supprimer un produit supprime aussi sa photo.
+- Les photos sont mises en cache 1 an par les navigateurs : un client qui revient ne les retélécharge pas.
+- **Un projet gratuit est mis en pause après 7 jours sans aucune visite.** Le site affiche alors les
+  produits de secours ; il suffit de cliquer sur **Restore project** dans Supabase.
+- Vérifiez une fois par mois : Supabase → menu de l'organisation → **Usage**.
+  Si un compteur approche 100 %, Supabase envoie aussi un e-mail.
+- Si la boutique grandit : l'offre **Pro** (25 $/mois) multiplie les limites (250 Go de téléchargements,
+  100 Go de stockage, plus de mise en pause).
+
 ## Pour un autre vendeur
 Refaites ces étapes avec un nouveau projet Supabase (de préférence sur un compte au nom de la boutique),
 puis remplacez l'URL et la clé dans `assets/js/config.js`.
