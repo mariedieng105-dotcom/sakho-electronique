@@ -480,11 +480,12 @@ a.topbar__item:hover { color: var(--ink); }
 .cart__done .btn { margin-top: 24px; align-self: center; }
 
 /* ---------- Mode admin ---------- */
-.footer__bottom-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-/* Accès admin volontairement discret */
+.footer__bottom-inner { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; }
+/* Accès admin volontairement discret, juste après le copyright
+   (à gauche : jamais sous le bouton WhatsApp flottant) */
 .admin-key {
-  width: 22px; height: 22px; padding: 3px; border: 0; background: none; color: var(--slate);
-  opacity: .18; border-radius: 6px; transition: opacity .3s ease;
+  flex-shrink: 0; width: 30px; height: 30px; padding: 7px; border: 0; background: none; color: var(--slate);
+  opacity: .22; border-radius: 8px; transition: opacity .3s ease;
 }
 .admin-key svg { width: 100%; height: 100%; }
 .admin-key:hover, .admin-key:focus-visible { opacity: .7; }
@@ -511,6 +512,7 @@ a.topbar__item:hover { color: var(--ink); }
   box-shadow: 0 16px 40px -12px rgba(0, 0, 0, .25); animation: barIn .5s var(--ease-spring);
 }
 .admin-bar[hidden] { display: none; }
+.is-admin .footer__bottom { padding-bottom: 96px; }  /* la barre admin ne cache pas le bas de page */
 @keyframes barIn { from { opacity: 0; transform: translate(-50%, 30px); } }
 .admin-bar__label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .admin-bar__dot { width: 8px; height: 8px; border-radius: 50%; background: #30d158; box-shadow: 0 0 0 3px rgba(48, 209, 88, .2); }
@@ -598,6 +600,8 @@ a.topbar__item:hover { color: var(--ink); }
   .hero { padding: 56px 0 48px; }
   .section { padding: 72px 0; }
   .about { grid-template-columns: 1fr; gap: 48px; }
+  /* Marge sous le pied de page : le bouton WhatsApp flottant ne recouvre plus rien */
+  .footer__bottom { padding-bottom: 96px; }
   .about__logo { max-width: 260px; }
   .contact { grid-template-columns: 1fr; }
   .panel { padding: 40px 28px; }
@@ -633,6 +637,7 @@ a.topbar__item:hover { color: var(--ink); }
   .footer__grid { grid-template-columns: 1fr; gap: 26px; }
   .wa-float { width: 50px; height: 50px; right: 16px; bottom: 16px; }
   .admin-bar { left: 16px; right: 16px; transform: none; bottom: 80px; justify-content: space-between; padding-left: 14px; }
+  .is-admin .footer__bottom { padding-bottom: 170px; }
   @keyframes barIn { from { opacity: 0; transform: translateY(30px); } }
   .admin-bar__label { font-size: 0; gap: 0; }
   .modal__row { grid-template-columns: 1fr; gap: 0; }

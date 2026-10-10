@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261010">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261010b">
   <script>
     // Active les animations, sauf si l'appareil demande de les réduire.
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-anim');
@@ -356,10 +356,10 @@
         </div>
       </div>
       <div class="field">
-        <label for="productImage">Photo (JPG, PNG ou WEBP, 3 Mo max)</label>
+        <label for="productImage">Photo (appareil photo ou galerie — elle est réduite automatiquement)</label>
         <div class="image-picker">
           <img id="productPreview" class="image-picker__preview" alt="Aperçu de la photo" hidden>
-          <input type="file" id="productImage" accept="image/jpeg,image/png,image/webp">
+          <input type="file" id="productImage" accept="image/*">
         </div>
       </div>
       <p class="modal__error" id="productFormError" role="alert"></p>
@@ -484,9 +484,9 @@
     <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></g></symbol>
   </svg>
 
-  <script src="assets/js/config.js?v=20261010"></script>
+  <script src="assets/js/config.js?v=20261010b"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
-  <script src="assets/js/main.js?v=20261010"></script>
-  <script src="assets/js/admin.js?v=20261010"></script>
+  <script src="assets/js/main.js?v=20261010b"></script>
+  <script src="assets/js/admin.js?v=20261010b"></script>
 </body>
 </html>

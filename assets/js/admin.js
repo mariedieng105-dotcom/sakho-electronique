@@ -10,7 +10,9 @@
   const CONFIGURED = Boolean(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && window.supabase);
   const db = CONFIGURED ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
   const BUCKET = 'products';
-  const MAX_IMAGE = 3 * 1024 * 1024;
+  const MAX_SOURCE = 30 * 1024 * 1024;  // photo d'origine (téléphone) acceptée jusqu'à 30 Mo
+  const MAX_SIDE = 1200;                 // la photo est réduite à 1200 px de côté maximum
+  const JPEG_QUALITY = 0.85;
 
   let isAdmin = false;
 
@@ -146,10 +148,43 @@
     setPreview(previewUrl);
   }
 
+  // Lit la photo (l'orientation du téléphone est respectée par le navigateur)
+  function loadImage(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('decode')); };
+      img.src = url;
+    });
+  }
+
+  // Réduit la photo (souvent 3 à 8 Mo sur un téléphone) en JPEG léger
+  async function compressImage(file) {
+    let img;
+    try {
+      img = await loadImage(file);
+    } catch (e) {
+      throw new Error('Impossible de lire cette photo. Choisissez une photo au format JPG ou PNG.');
+    }
+    const w = img.naturalWidth, h = img.naturalHeight;
+    const scale = Math.min(1, MAX_SIDE / Math.max(w, h));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(w * scale));
+    canvas.height = Math.max(1, Math.round(h * scale));
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';  // fond blanc pour les images transparentes
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', JPEG_QUALITY));
+    if (!blob) throw new Error('Impossible de préparer cette photo. Essayez avec une autre.');
+    return blob;
+  }
+
   async function uploadImage(file) {
-    const ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[file.type];
-    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-    const { error } = await db.storage.from(BUCKET).upload(path, file, { contentType: file.type, upsert: false });
+    const blob = await compressImage(file);
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+    const { error } = await db.storage.from(BUCKET).upload(path, blob, { contentType: 'image/jpeg', upsert: false });
     if (error) throw new Error('Envoi de la photo impossible : ' + error.message);
     return db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
   }
@@ -178,8 +213,8 @@
     if (!name) { err.textContent = 'Le nom est obligatoire.'; f.elements.name.focus(); return; }
     if (priceRaw && !/^\d{1,9}$/.test(priceRaw)) { err.textContent = 'Le prix doit être un nombre entier en FCFA (ex. 250000), ou vide.'; return; }
     if (!editingId && !file) { err.textContent = 'Choisissez une photo du produit.'; return; }
-    if (file && !['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) { err.textContent = 'Photo au format JPG, PNG ou WEBP uniquement.'; return; }
-    if (file && file.size > MAX_IMAGE) { err.textContent = 'Photo trop lourde (3 Mo maximum).'; return; }
+    if (file && file.type && !file.type.startsWith('image/')) { err.textContent = 'Le fichier choisi n’est pas une photo.'; return; }
+    if (file && file.size > MAX_SOURCE) { err.textContent = 'Photo trop lourde (30 Mo maximum).'; return; }
 
     btn.disabled = true;
     btn.textContent = 'Enregistrement…';
