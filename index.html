@@ -3,14 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sakho Électronic – Boutique d'électronique à Dakar</title>
-  <meta name="description" content="Sakho Électronic : smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques à Médina, Dakar. Commandez directement sur le site.">
+  <!-- Référencement Google : nom de la boutique, résumé affiché sous le nom dans les résultats,
+       et autorisation explicite pour les robots. Si le site change d'adresse (nom de domaine),
+       remplacez l'adresse https://mariedieng105-dotcom.github.io/sakho-electronique/ partout dans ce bloc,
+       dans sitemap.xml et dans robots.txt. -->
+  <title>Sakho Électronic – Boutique d'électronique à Médina, Dakar</title>
+  <meta name="description" content="Sakho Électronic (Sakho Électronique), boutique d'électronique à Médina, Dakar : smartphones, ordinateurs et accessoires de marque. Livraison au Sénégal.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://mariedieng105-dotcom.github.io/sakho-electronique/">
+  <!-- Google Search Console : collez la balise de validation donnée par Google juste en dessous de cette ligne. -->
+
+  <!-- Aperçu du lien quand on le partage (WhatsApp, Facebook…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sakho Électronic">
+  <meta property="og:title" content="Sakho Électronic – Boutique d'électronique à Médina, Dakar">
+  <meta property="og:description" content="Smartphones, ordinateurs et accessoires des grandes marques à Médina, Dakar. Commandez sur le site ou sur WhatsApp, livraison au Sénégal.">
+  <meta property="og:url" content="https://mariedieng105-dotcom.github.io/sakho-electronique/">
+  <meta property="og:image" content="https://mariedieng105-dotcom.github.io/sakho-electronique/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logo Sakho Électronic">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Fiche d'identité de la boutique pour Google (données structurées schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://mariedieng105-dotcom.github.io/sakho-electronique/#site",
+        "name": "Sakho Électronic",
+        "alternateName": "Sakho Électronique",
+        "url": "https://mariedieng105-dotcom.github.io/sakho-electronique/",
+        "inLanguage": "fr"
+      },
+      {
+        "@type": "ElectronicsStore",
+        "@id": "https://mariedieng105-dotcom.github.io/sakho-electronique/#boutique",
+        "name": "Sakho Électronic",
+        "alternateName": "Sakho Électronique",
+        "description": "Boutique d'électronique à Médina, Dakar : smartphones, ordinateurs et accessoires des grandes marques, livraison au Sénégal.",
+        "slogan": "Votre satisfaction, notre priorité.",
+        "url": "https://mariedieng105-dotcom.github.io/sakho-electronique/",
+        "logo": "https://mariedieng105-dotcom.github.io/sakho-electronique/assets/img/logo.jpg",
+        "image": "https://mariedieng105-dotcom.github.io/sakho-electronique/assets/img/og-image.jpg",
+        "telephone": "+221 77 932 96 78",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rue 29 x Blaise Diagne, Médina",
+          "addressLocality": "Dakar",
+          "addressCountry": "SN"
+        }
+      }
+    ]
+  }
+  </script>
+
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/img/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261011">
+  <link rel="stylesheet" href="assets/css/style.css?v=2026101102">
   <script>
     // Active les animations, sauf si l'appareil demande de les réduire.
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-anim');
@@ -37,7 +92,7 @@
   <header class="header" id="header">
     <div class="container header__inner">
       <a href="#accueil" class="header__logo" aria-label="Sakho Électronic – Accueil">
-        <img src="assets/img/logo.jpg" alt="Logo Sakho Électronic" width="893" height="1079">
+        <img src="assets/img/logo.jpg" alt="Sakho Électronic" width="893" height="1079">
       </a>
 
       <nav class="nav" id="nav" aria-label="Navigation principale">
@@ -74,8 +129,11 @@
         <span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span>
       </div>
       <div class="container hero__inner">
-        <p class="hero__kicker">Sakho Électronic</p>
-        <h1 class="hero__title">Votre boutique <span class="hero__accent">d’électronique</span> de confiance.</h1>
+        <!-- Le nom de la boutique fait partie du titre principal (h1), le texte le plus important pour Google -->
+        <h1 class="hero__heading">
+          <span class="hero__kicker">Sakho Électronic</span>
+          <span class="hero__title">Votre boutique <span class="hero__accent">d’électronique</span> de confiance.</span>
+        </h1>
         <p class="hero__sub">Smartphones, ordinateurs, accessoires et équipements électroniques des grandes marques.</p>
         <div class="hero__btns">
           <a href="#produits" class="btn btn--primary btn--lg">Voir nos produits</a>
@@ -495,9 +553,9 @@
     <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></g></symbol>
   </svg>
 
-  <script src="assets/js/config.js?v=20261011"></script>
+  <script src="assets/js/config.js?v=2026101102"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
-  <script src="assets/js/main.js?v=20261011"></script>
-  <script src="assets/js/admin.js?v=20261011"></script>
+  <script src="assets/js/main.js?v=2026101102"></script>
+  <script src="assets/js/admin.js?v=2026101102"></script>
 </body>
 </html>

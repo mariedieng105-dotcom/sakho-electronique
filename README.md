@@ -31,6 +31,24 @@ Déjà en place pour Sakho Électronic : l'adresse du script est dans `ORDER_END
 - `assets/img/logo.jpg` : logo officiel fourni (non modifié).
 - Les autres visuels sont provisoires : remplacez-les par vos propres photos (même nom de fichier).
 
+## Être trouvé sur Google
+Déjà en place dans le code : le nom « Sakho Électronic » dans le titre de l'onglet, le logo et le grand titre
+de la page d'accueil ; un résumé pour Google (`<meta name="description">` en haut de `index.html`) ; une fiche
+d'identité de la boutique (adresse, téléphone, logo) ; un plan du site (`sitemap.xml`) ; rien ne bloque les robots.
+
+À faire une seule fois (avec le compte Google de la boutique) :
+1. **Google Search Console** : https://search.google.com/search-console → **Ajouter une propriété** →
+   **Préfixe de l'URL** → `https://mariedieng105-dotcom.github.io/sakho-electronique/` → **Continuer**.
+2. Choisissez la méthode **Balise HTML** et copiez la ligne `<meta name="google-site-verification" …>`.
+3. Sur GitHub, ouvrez `index.html` → ✏️ → Ctrl + F « Search Console » → à la fin de cette ligne, appuyez sur
+   Entrée et collez la balise → **Commit changes**. Attendez 2 minutes, puis cliquez sur **Valider** dans Search Console.
+4. Dans Search Console : menu **Sitemaps** → tapez `sitemap.xml` → **Envoyer** ; puis **Inspection de l'URL** →
+   collez l'adresse du site → **Demander une indexation**.
+5. **Fiche d'établissement Google** (https://www.google.com/business/) : créez la fiche « Sakho Électronic »
+   (adresse, téléphones, lien du site). C'est elle qui fait apparaître la boutique sur Google Maps.
+
+Google met en général quelques jours à quelques semaines pour afficher un nouveau site.
+
 ## Faire évoluer le site
 Tout le site est sur GitHub : il continue de fonctionner sans abonnement à Claude.
 
@@ -46,7 +64,7 @@ Exemples :
 - **Un numéro de téléphone** : il apparaît à plusieurs endroits de `index.html` (cherchez l'ancien numéro),
   et dans `WHATSAPP_NUMBER` en haut de `assets/js/main.js` (format `221779329678`, sans + ni espaces).
 - **Important** : si vous modifiez `assets/css/style.css` ou un fichier `assets/js/…`, changez aussi le
-  numéro `?v=…` des 4 lignes qui chargent ces fichiers dans `index.html` (par ex. `?v=20261011` → `?v=20261101`).
+  numéro `?v=…` des 4 lignes qui chargent ces fichiers dans `index.html` (par ex. `?v=2026101102` → `?v=20261101`).
   Sinon les navigateurs garderont l'ancienne version.
 
 Les produits, eux, se gèrent depuis le site (mode admin) : pas besoin de toucher au code.

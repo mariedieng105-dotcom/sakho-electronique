@@ -94,10 +94,25 @@ also requires an `ALTER TABLE` run in the live Supabase project.
   no clones, `.is-static` snap rail. `.cat` clicks are delegated on `document` so clones work too.
 - Fly-to-cart, marquee brands, scroll progress bar and hero parallax are in the same file.
 
+### SEO (Google)
+- Goal set by the owner: rank first for the shop name. The logo spells it **Sakho Électronic**; people type
+  "sakho electronique", so that spelling is the `alternateName` and appears once in the meta description.
+- `<head>` of `index.html`: `<title>` and meta description (~150 chars), `robots` meta (index, follow), canonical,
+  Open Graph tags (WhatsApp/Facebook link previews; `assets/img/og-image.jpg` = logo centred on white, 1200×630) and
+  JSON-LD `@graph` with `WebSite` + `ElectronicsStore`. Hours and social links (`openingHoursSpecification`, `sameAs`)
+  are absent because the owner never gave them: add them only once she does, never invent them.
+- The brand is inside the only `<h1>`: `.hero__kicker` and `.hero__title` are `display: block` spans of `h1.hero__heading`.
+- The Search Console verification `<meta>` goes right below the marked comment in `<head>`.
+- `sitemap.xml` is submitted in Search Console. `robots.txt` only takes effect at a domain root (custom domain);
+  on the project path nothing blocks crawlers (`mariedieng105-dotcom.github.io/robots.txt` is a 404 = allow all).
+- Google shows site names and favicons per hostname, so on `*.github.io/sakho-electronique/` they will not show the
+  brand; a custom domain fixes that (then update every absolute URL, see below).
+
 ## Per-shop configuration
 To rebrand for another shop: `assets/js/config.js` (Supabase URL/key, `ADMIN_EMAIL`), `main.js`
 (`WHATSAPP_NUMBER`, `ORDER_ENDPOINT`), phone numbers and address repeated in several places in `index.html`
-(topbar, contact, footer — grep for them), logo/images in `assets/img/`, `SHOP_NAME`/`NOTIFY_EMAIL` in `Code.gs`,
-and the admin email seeded in `supabase/setup.sql`. Each shop should get its own Google and Supabase accounts
+(topbar, contact, footer — grep for them), logo/images in `assets/img/` (including `og-image.jpg`), the SEO block in
+the `<head>` of `index.html` (name, description, and the absolute site URL, also in `sitemap.xml` and `robots.txt`),
+`SHOP_NAME`/`NOTIFY_EMAIL` in `Code.gs`, and the admin email seeded in `supabase/setup.sql`. Each shop should get its own Google and Supabase accounts
 (free-tier quotas are per Supabase organization). Owner-facing guides: `supabase/INSTRUCTIONS.md`,
 `apps-script/INSTRUCTIONS.md`.

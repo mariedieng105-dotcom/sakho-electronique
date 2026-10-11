@@ -166,6 +166,8 @@ a.topbar__item:hover { color: var(--ink); }
 @keyframes drift2 { to { transform: translate(-100px, 120px) scale(.9); } }
 @keyframes drift3 { to { transform: translate(-80px, -60px) scale(1.2); } }
 .hero__inner { position: relative; z-index: 1; }
+/* Le nom et le slogan sont deux lignes d'un même titre h1 */
+.hero__kicker, .hero__title { display: block; }
 .hero__kicker { font-size: clamp(21px, 2.6vw, 32px); font-weight: 600; line-height: 1.13; letter-spacing: 0.004em; color: var(--ink); }
 .hero__title {
   max-width: 900px; margin: 12px auto 0;

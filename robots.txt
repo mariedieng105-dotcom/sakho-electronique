@@ -1,0 +1,8 @@
+# Tous les moteurs de recherche peuvent explorer tout le site.
+# Remarque : Google ne lit ce fichier qu'à la racine d'un nom de domaine (ex. si la boutique
+# prend un jour sa propre adresse). Sur l'adresse GitHub actuelle, rien ne bloque les robots
+# et le plan du site se déclare dans Google Search Console.
+User-agent: *
+Allow: /
+
+Sitemap: https://mariedieng105-dotcom.github.io/sakho-electronique/sitemap.xml
