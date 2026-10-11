@@ -49,6 +49,9 @@ d'identité de la boutique (adresse, téléphone, logo) ; un plan du site (`site
 
 Google met en général quelques jours à quelques semaines pour afficher un nouveau site.
 
+**Pour vos autres sites :** `prompts/visibilite-google.md` contient tout ce travail sous forme de prompt complet,
+à copier au début d'une conversation avec une autre IA de code (Claude, ChatGPT…).
+
 ## Faire évoluer le site
 Tout le site est sur GitHub : il continue de fonctionner sans abonnement à Claude.
 

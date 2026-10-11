@@ -107,6 +107,8 @@ also requires an `ALTER TABLE` run in the live Supabase project.
   on the project path nothing blocks crawlers (`mariedieng105-dotcom.github.io/robots.txt` is a 404 = allow all).
 - Google shows site names and favicons per hostname, so on `*.github.io/sakho-electronique/` they will not show the
   brand; a custom domain fixes that (then update every absolute URL, see below).
+- `prompts/visibilite-google.md` is the owner's generic, French version of this SEO work, which she pastes into other AI
+  coding tools for her other sites. Keep it consistent if the approach here changes.
 
 ## Per-shop configuration
 To rebrand for another shop: `assets/js/config.js` (Supabase URL/key, `ADMIN_EMAIL`), `main.js`
